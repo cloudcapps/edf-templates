@@ -2,6 +2,7 @@
 interface {{ interface.name }}
 {% if interface.description is defined %}
  description {{ interface.description }}
+{% endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
