@@ -1,7 +1,6 @@
 {% for interface in device.interfaces.all() %}
 interface {{ interface.name }}
-{% if interface.description is defined %} description {{ interface.description }}
-{% endif %}
+{% if interface.description != None %} description {{ interface.description }}{%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
@@ -17,7 +16,7 @@ interface {{ interface.name }}
 {%- elif "tagged-all" in interface.mode %}
  switchport mode trunk switchport trunk allowed vlan all 
 {%- else %}
-{%- if interface.lag is defined %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{%- endif %}{%-endfor %} mode active
+{%- if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{%- endif %}{%-endfor %} mode active
 {%- endif %}
 {%- endif %}
 {%- endfor %}
