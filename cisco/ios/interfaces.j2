@@ -1,3 +1,4 @@
+{% for switch in device.virtual_chassis.members %}
 {% for interface in device.interfaces.all() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
@@ -21,4 +22,5 @@ interface {{ interface.name }}
 {%- endif %}
 {%- endif %}
 !
+{%- endfor %}
 {%- endfor %}
