@@ -1,4 +1,3 @@
-{% if device.virtual_chassis %}
 {% for member in virtual_chassis.filter(virtual_chassis_id=device.virtual_chassis.id) %}
 {% for interface in device.interfaces.all() %}
 interface {{ interface.name }}
@@ -20,7 +19,6 @@ interface {{ interface.name }}
  switchport mode trunk
  switchport trunk allowed vlan all
 {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
-{%- endif %}
 {%- endif %}
 {%- endif %}
 !
