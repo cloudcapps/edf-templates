@@ -1,5 +1,4 @@
-{% for member in virtual_chassis.filter(virtual_chassis_id=device.virtual_chassis.id) %}
-{% for interface in device.interfaces.all() %}
+{% for interface in device.vc_interfaces %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}{%- endif %}
@@ -22,5 +21,4 @@ interface {{ interface.name }}
 {%- endif %}
 {%- endif %}
 !
-{%- endfor %}
 {%- endfor %}
