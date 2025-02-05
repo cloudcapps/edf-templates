@@ -15,4 +15,13 @@ interface {{ interface.name }}
 {%- elif "tagged-all" in interface.mode %}
  switchport mode trunk switchport trunk allowed vlan all {%- else %}
 {%- if interface.lag != None %}
- channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{%- endif %}{%-endfor %} mode active {%- endif %}
+ channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{%- endif %}{%-endfor %} mode active {%- endif %} {%- endif %}
+{% else %}
+interface {{interface.name }}
+ description Management VLAN
+{%- if interface.enabled == false %}
+ shutdown
+{%- elif interface.enabled == true %} 
+ no shutdown {%- endif %} ip address {{ device.primary_ip.address }} {{device.primary_ip.address.netmask }}
+{%- endif %}
+{%- endfor %}
