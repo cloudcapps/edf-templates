@@ -22,9 +22,3 @@ interface {{ interface.name }}
 {%- endif %}
 !
 {%- endfor %}
-
-{% for device in device.virtual_chassis.members %}
-  {% for interface in device.interfaces.all %}
-    {{ interface.name }}
-  {% endfor %}
-{% endfor %}
