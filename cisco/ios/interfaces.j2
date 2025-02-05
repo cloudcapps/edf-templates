@@ -1,6 +1,6 @@
 {% for interface in device.interfaces.all() %}
 interface {{ interface.name }}
-{% if interface.description != "" %} description {{ interface.description }}{%- endif %}
+{%- if interface.description != "" %} description {{ interface.description }}{%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
