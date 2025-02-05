@@ -3,7 +3,7 @@
 {%- for vlan in group.vlans.all()%}
 vlan {{ vlan.vid }}
  name {{ vlan.name }}
-{%- endif -%}
+{%- endfor -%}
 {%- elif group.name == device.site.name + " IT VLANs" and device.role.name == "Access Switch"-%}
 {%- for vlan in group.vlans.all()%}
 vlan {{ vlan.vid }}
