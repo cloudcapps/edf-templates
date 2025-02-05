@@ -15,9 +15,9 @@ interface {{ interface.name }}
 {%- endfor %}
 {%- elif "tagged-all" in interface.mode %}
  switchport mode trunk switchport trunk allowed vlan all 
-{%- else %}
-{{interface.lag}}  {{interface.lag.name}}
+{%- elif %}
 {%- if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{%- endif %}{%-endfor %} mode active
+{%- endif %}
 {%- endif %}
 {%- endif %}
 {%- endfor %}
