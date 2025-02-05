@@ -1,8 +1,8 @@
-{%- for vlg in device.site.vlan_groups.all() -%}
-{%- if vlg.name == environment + " VLANS" -%}
-{%- for vl in vlg.vlans.all()%}
-vlan {{ vl.vid }}
- name {{ vl.name }}
-{%- endfor -%}
-{%- endif -%}
-{%- endfor -%}
+# {%- for group in device.site.vlan_groups.all() -%}
+# {%- if group.name == device.site.name + "EXT VLANS" and device.role == "External Switch"-%}
+# {%- for vlan in group.vlans.all()%}
+# vlan {{ vlan.vid }}
+#  name {{ vlan.name }}
+# {%- endfor -%}
+# {%- endif -%}
+# {%- endfor -%}
