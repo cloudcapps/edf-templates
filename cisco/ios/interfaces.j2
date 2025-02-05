@@ -1,5 +1,5 @@
-{#
-{% for interface in device.interfaces.all() %}
+
+{% for interface in device.vc_interfaces() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}{%- endif %}
@@ -23,8 +23,5 @@ interface {{ interface.name }}
 {%- endif %}
 !
 {%- endfor %}
-#}
 
-{% for interface in device.vc_interfaces() %}
-interface {{ interface.name }}
-{%- endfor %}
+
