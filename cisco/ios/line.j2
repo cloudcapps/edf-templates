@@ -3,8 +3,6 @@ line con 0
  login authentication CON_0
  exec-timeout {{line.exec_timeout}} 0
  logging synchronous
-line aux 0
- no exec
 line vty 0 4
  access-class {{line.acl}} in vrf-also
  exec-timeout {{line.exec_timeout}} 0
