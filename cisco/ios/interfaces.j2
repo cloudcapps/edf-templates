@@ -1,4 +1,4 @@
-{% for interface in device.interfaces.all() %}
+{% for interface in device.vc_interfaces.all() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}{%- endif %}
