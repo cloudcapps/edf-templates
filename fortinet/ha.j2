@@ -1,0 +1,9 @@
+config system ha
+    set group-name "{{ha.group}}"
+    set mode a-p
+    set password ENC {{ha.password}}
+    set hbdev "{{hbdev1}}" 0 "{{hbdev2}}" 0 
+    set session-pickup enable
+    set override disable
+    set priority {{ha.priority}}
+end
