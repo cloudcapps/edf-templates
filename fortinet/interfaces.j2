@@ -60,7 +60,7 @@ config system interface
     edit "DMZ FortiLink"
         set vdom "root"
         set fortilink enable
-        set ip {{device.interfaces['DMZ FortiLink.MANAGEMENT'].ip.address}}
+        set ip {{device.interfaces['DMZ FortiLink.MANAGEMENT'].name}}
         set allowaccess ping
         set type aggregate
         set member "a" "b"
