@@ -27,6 +27,7 @@ config system interface
   edit "{{interface.name}}"
     set vdom "root"
     set alloweaccess {% for tag in interface.tags.all() %}{{ tag.id }}{% if not loop.last %}' '{% endif %}{% endfor %}
+{% endfor %}
     
     
 
