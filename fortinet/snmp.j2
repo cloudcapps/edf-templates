@@ -1,16 +1,9 @@
-{%- for profiles, params in snmp.items() %}
-snmp-server group {{params.group}} v3 priv read {{params.view}}
-snmp-server view {{params.view}} iso included
-snmp-server user {{params.user}} {{params.group}} v3 auth sha {{params.auth}} priv aes 256 {{params.priv}} access {{params.acl}}
-{%- endfor %}
-
 config system snmp user
-    edit "SNMP_RO"
+    edit "{{snmp.read_only.user}}"
         set trap-status disable
-        set notify-hosts 10.66.1.40 10.66.1.41 10.66.1.42 10.66.1.43 10.66.1.44 10.66.1.45 10.66.1.46 10.66.1.47 10.66.3.41 10.82.3.41
-        set source-ip 172.21.224.1
+        set source-ip "{{device.primary_ip.address.ip}}"
         set security-level auth-priv
-        set auth-pwd ENC cGxfbGQymXpc3oURNI8Uu3jIt3oE2dwTXAm3z3HsPrh9yHL2VJYQeteeate3SpWUvlRdLDG0A71CnMpDNiQkyj2jyqV4wOhwSoEv8ouzTdaqXiYMa4HPwvVkZcU5ep1nMvGgGob0bRyD0YQI75TmASQRV1qnU0nDNPWZzBe3qBscWS+iYHTmeczY4Ix7mJAhYGE5yA==
-        set priv-pwd ENC cGxfbD2573CIe23+aA2+MfYkAfQHYqRR8OjxTs0ItfKADMZh5lLpFlu8MRiUx4Lz6lVdljo6nTxVH71HQ4J5/8NuM11cEu94o9EGuTJStY7dxjEU9K6BganHdgzM5yd5lP0oJrZPlWb5TLDgQ77INdhmASkwX7Ei4xVbTlYzzaHE8LPkB+tLnHuxEG2DpLlv0RDkRg==
+        set auth-pwd {{snmp.read_only.auth}}
+        set priv-pwd {{snmp.read_only.priv}}
     next
 end
