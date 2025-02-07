@@ -35,6 +35,8 @@ config system interface
 
 {{device.interfaces.all()}}
 
+{{device.interfaces['DMZ FortiLink.MANAGEMENT']}}
+
 config system interface
     edit "wan1"
         set vdom "root"
