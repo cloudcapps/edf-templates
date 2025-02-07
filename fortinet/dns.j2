@@ -5,7 +5,7 @@ config system dns
     set interface-select-method sdwan
 end
 config system ddns
-    edit 1
+    edit 0
         set ddns-server FortiGuardDDNS
         set ddns-domain "{{device.site.facility}}.fortiddns.com"
         set monitor-interface "ISP1"

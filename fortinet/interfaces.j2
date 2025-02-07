@@ -1,4 +1,4 @@
-
+{#
 {% for interface in device.vc_interfaces() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
@@ -20,4 +20,203 @@ interface {{ interface.name }}
 {%- endif %}
 {%- endif %}
 !
-{%- endfor %}
+{%- endfor %}#}
+
+config system interface
+{% for interface in device.interfaces() %}
+  edit "{{interface.name}}"
+    set vdom "root"
+    set alloweaccess {% for tag in interface.tags.all() %}{{ tag.id }}{% if not loop.last %}' '{% endif %}{% endfor %}
+    
+    
+
+config system interface
+    edit "wan1"
+        set vdom "root"
+        set allowaccess ping fgfm
+        set type physical
+        set role wan
+    next
+    edit "wan2"
+        set vdom "root"
+        set mode dhcp
+        set allowaccess ping fgfm
+        set type physical
+        set lldp-reception enable
+        set role wan
+        set defaultgw disable
+    next
+    edit "internal1"
+        set vdom "root"
+        set type physical
+        set alias "HA Heartbeat 1"
+    next
+    edit "internal2"
+        set vdom "root"
+        set type physical
+        set alias "HA Heartbeat 2"
+    next
+    edit "DMZ FortiLink"
+        set vdom "root"
+        set fortilink enable
+        set ip {{device.interfaces['DMZ FortiLink.MANAGEMENT'].ip.address}}
+        set allowaccess ping
+        set type aggregate
+        set member "a" "b"
+        set device-identification enable
+        set fortilink-split-interface disable
+        set switch-controller-nac "DMZ FortiLink"
+        set switch-controller-dynamic "DMZ FortiLink"
+        set lldp-reception enable
+        set lldp-transmission enable
+        set swc-first-create 255
+    next
+    edit "OT FortiLink"
+        set vdom "root"
+        set fortilink enable
+        set ip 172.20.224.33 255.255.255.224
+        set allowaccess ping
+        set type aggregate
+        set member "internal5" "internal6"
+        set device-identification enable
+        set lldp-reception enable
+        set lldp-transmission enable
+        set auto-auth-extension-device enable
+        set fortilink-split-interface disable
+        set switch-controller-nac "OT FortiLink"
+        set switch-controller-dynamic "OT FortiLink"
+        set swc-first-create 255
+    next
+    edit "MANAGEMENT"
+        set vdom "root"
+        set ip 172.20.224.1 255.255.255.240
+        set allowaccess ping https ssh snmp http fgfm
+        set device-identification enable
+        set role lan
+        set interface "DMZ FortiLink"
+        set vlanid 1000
+    next
+    edit "PI"
+        set vdom "root"
+        set ip 172.20.225.1 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2000
+    next
+    edit "SERVERS"
+        set vdom "root"
+        set ip 172.20.225.33 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2032
+    next
+    edit "MET"
+        set vdom "root"
+        set ip 172.20.225.129 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2128
+    next
+    edit "METERS"
+        set vdom "root"
+        set ip 172.20.225.97 255.255.255.224
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2160
+    next
+    edit "SCADA_MGMT"
+        set vdom "root"
+        set ip 172.20.225.177 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2176
+    next
+    edit "SCADA"
+        set vdom "root"
+        set ip 172.20.225.193 255.255.255.192
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2192
+    next
+    edit "VERIZON"
+        set vdom "root"
+        set mode dhcp
+        set allowaccess ping https ssh http fgfm
+        set type fext-wan
+        set role wan
+    next
+    edit "HYPERVISORS"
+        set vdom "root"
+        set ip 172.20.224.65 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "DMZ FortiLink"
+        set vlanid 1064
+    next
+    edit "OEM"
+        set vdom "root"
+        set ip 172.20.226.1 255.255.254.0
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 3000
+    next
+    edit "DMZ_01"
+        set vdom "root"
+        set ip 172.20.224.129 255.255.255.240
+        set allowaccess ping
+        set alias "NETOPS"
+        set device-identification enable
+        set role lan
+        set interface "DMZ FortiLink"
+        set vlanid 1128
+    next
+    edit "BACKUP"
+        set vdom "root"
+        set ip 172.20.225.65 255.255.255.240
+        set allowaccess ping
+        set device-identification enable
+        set role lan
+        set interface "OT FortiLink"
+        set vlanid 2064
+    next
+    edit "ISP1"
+        set vdom "root"
+        set mode dhcp
+        set allowaccess ping https ssh http fgfm
+        set alias "STARLINK"
+        set device-identification enable
+        set role lan
+        set interface "wan1"
+        set vlanid 10
+    next
+    edit "ISP2"
+        set vdom "root"
+        set allowaccess ping https ssh http fgfm
+        set role wan
+        set interface "wan1"
+        set vlanid 20
+    next
+    edit "ISP3"
+        set vdom "root"
+        set allowaccess ping https ssh http fgfm
+        set role wan
+        set interface "wan1"
+        set vlanid 30
+    next
+end
+

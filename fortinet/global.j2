@@ -1,0 +1,11 @@
+config system global
+    set admin-server-cert "self-sign"
+    set admintimeout 15
+    set alias "{{device.name}}"
+    set autorun-log-fsck enable
+    set gui-auto-upgrade-setup-warning disable
+    set hostname "{{device.name}}"
+    set management-port-use-admin-sport disable
+    set switch-controller enable
+    set timezone 04
+end
