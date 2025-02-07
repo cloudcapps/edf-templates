@@ -23,3 +23,14 @@ radius server {{server}}
  address ipv4 {{ip}} auth-port {{radius.auth_port}} acct-port {{radius.acct_port}}
  key {{radius.key}}
 {%- endfor %}
+
+config user radius
+    edit "EDFR ISE"
+        set server "{{server.SDHQ-ISE-01}}"
+        set secret {{radius.key}}
+        set source-ip "{{device.interface['MANAGEMENT'].ip}}}"
+        set interface-select-method sdwan
+        set secondary-server "server.COLO-ISE-01"
+        set secondary-secret {{radius.key}}
+    next
+end
