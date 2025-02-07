@@ -33,6 +33,8 @@ config system interface
   "{{interface.name}}"
 {% endfor %}
 
+{{device.interfaces['A'].name}}
+
 config system interface
     edit "wan1"
         set vdom "root"
