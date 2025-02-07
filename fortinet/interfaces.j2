@@ -33,7 +33,7 @@ config system interface
   "{{interface.name}}"
 {% endfor %}
 
-{{device.interfaces}}
+{{device.interfaces.all()}}
 
 config system interface
     edit "wan1"
