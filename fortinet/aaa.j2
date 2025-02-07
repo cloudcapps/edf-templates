@@ -1,10 +1,10 @@
 config user radius
     edit "EDFR ISE"
-        set server "{{server.['SDHQ-ISE-01']}}"
+        set server "{{radius.server.['SDHQ-ISE-01']}}"
         set secret {{radius.key}}
         set source-ip "{{device.interface['MANAGEMENT'].ip}}}"
         set interface-select-method sdwan
-        set secondary-server "server.['COLO-ISE-01']"
+        set secondary-server "{{radius.server.['COLO-ISE-01']}}"
         set secondary-secret {{radius.key}}
     next
 end
