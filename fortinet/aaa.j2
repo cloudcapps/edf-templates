@@ -9,6 +9,6 @@
     next
 end #}
 
-{% for int in device.interfaces %}
+{% for int in device.interfaces.all() %}
 {{int}}
 {%endfor%}
