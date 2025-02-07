@@ -33,9 +33,7 @@ config system interface
   "{{interface.name}}"
 {% endfor %}
 
-{% for k, v in device.items() %}
-  "{{k}}"
-{% endfor %}
+{{device.interfaces}}
 
 config system interface
     edit "wan1"
