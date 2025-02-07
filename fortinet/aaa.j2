@@ -1,13 +1,13 @@
-{#config user radius
+config user radius
     edit "EDFR ISE"
         set server "{{radius.servers['SDHQ-ISE-01']}}"
         set secret {{radius.key}}
-        set source-ip "{{device.interfaces['DMZ Fortilink.MANAGEMENT'].ip}}}"
+        set source-ip "{{device.interfaces['DMZ FortiLink.MANAGEMENT']}}"
         set interface-select-method sdwan
         set secondary-server "{{radius.servers['COLO-ISE-01']}}"
         set secondary-secret {{radius.key}}
     next
-end #}
+end
 
 {% for int in device.interfaces.all() %}
 {{int}}
