@@ -1,4 +1,4 @@
-config user radius
+{#config user radius
     edit "EDFR ISE"
         set server "{{radius.servers['SDHQ-ISE-01']}}"
         set secret {{radius.key}}
@@ -7,4 +7,8 @@ config user radius
         set secondary-server "{{radius.servers['COLO-ISE-01']}}"
         set secondary-secret {{radius.key}}
     next
-end
+end #}
+
+{% for int in device.interfaces %}
+{{int}}
+{%endfor%}
