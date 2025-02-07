@@ -1,0 +1,23 @@
+
+{% for interface in device.vc_interfaces() %}
+interface {{ interface.name }}
+{%- if interface.description != "" %}
+ description {{ interface.description }}{%- endif %}
+{%- if interface.enabled == false %}
+ shutdown 
+{%- elif interface.enabled == true %}
+ no shutdown {%- endif %}
+ {%- if interface.mode == "access" %}
+ switchport mode access
+ switchport access vlan {{ interface.untagged_vlan.vid }}
+{%- elif interface.mode == "tagged" %}
+ switchport mode trunk 
+ switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() %}{{ vlan.vid }}{% if not loop.last %},{% endif %}{% endfor %}
+{%- elif "tagged-all" in interface.mode %}
+ switchport mode trunk
+ switchport trunk allowed vlan all
+{% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
+{%- endif %}
+{%- endif %}
+!
+{%- endfor %}
