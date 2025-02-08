@@ -24,11 +24,11 @@ interface {{ interface.name }}
 
 
 config system interface
-{% for interface in device.interfaces.all() %}
+{%- for interface in device.interfaces.all() %}
   edit "{{interface.name}}"
     set vdom "root"
-    set allowaccess {% for tag in interface.tags.all() %}{{ tag.name }}{% if not loop.last %} {% endif %}{% endfor %}
-{% endfor %}
+    {%- if interface.tag %}set allowaccess {% for tag in interface.tags.all() %}{{ tag.name }}{% if not loop.last %} {% endif %}{% endfor %}{% endif -%}
+{%- endfor %}
 
 
 
