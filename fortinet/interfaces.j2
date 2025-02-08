@@ -26,7 +26,7 @@ config system interface
 {% for interface in device.interfaces() %}
   edit "{{interface.name}}"
     set vdom "root"
-    set alloweaccess {% for tag in interface.tags.all() %}{{ tag }}{% if not loop.last %}' '{% endif %}{% endfor %}
+    set alloweaccess {% for tag in interface.tags.all() %}{{ tag.name }}{% if not loop.last %}' '{% endif %}{% endfor %}
 {% endfor %}
 
 
