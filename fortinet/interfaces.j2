@@ -22,7 +22,7 @@ interface {{ interface.name }}
 !
 {%- endfor %}#}
 
-{{ object.interfaces.get(name='DMZ FortiLink').ip_addresses.first().address.ip }}
+{{ device.interfaces.get(name='DMZ FortiLink').ip_addresses.first().address.ip }}
 
 config system interface
 {%- for interface in device.interfaces.all() %}
