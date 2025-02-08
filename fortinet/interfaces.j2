@@ -22,6 +22,7 @@ interface {{ interface.name }}
 !
 {%- endfor %}#}
 
+{{ object.interfaces.get(name='DMZ FortiLink').ip_addresses.first().address.ip }}
 
 config system interface
 {%- for interface in device.interfaces.all() %}
@@ -30,7 +31,7 @@ config system interface
     {% if interface.tags.all() %}set allowaccess {% for tag in interface.tags.all() %}{{ tag.name }}{% if not loop.last %} {% endif %}{% endfor %}{% endif %}
 {% endfor %}
 
-{{ object.interfaces.get(name='DMZ FortiLink').ip_addresses.first().address.ip }}
+
 
 
 config system interface
