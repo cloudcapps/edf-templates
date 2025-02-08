@@ -22,7 +22,6 @@ interface {{ interface.name }}
 !
 {%- endfor %}#}
 
-{{device.interfaces.get('DMZ FortiLink').name}}
 
 config system interface
 {% for interface in device.interfaces.all() %}
