@@ -20,22 +20,15 @@ interface {{ interface.name }}
 {%- endif %}
 {%- endif %}
 !
-{%- endfor %}
+{%- endfor %}#}
 
 config system interface
 {% for interface in device.interfaces() %}
   edit "{{interface.name}}"
     set vdom "root"
     set alloweaccess {% for tag in interface.tags.all() %}{{ tag.id }}{% if not loop.last %}' '{% endif %}{% endfor %}
-{% endfor %}#}
-    
-{% for interface in device.interfaces.all() %}
-  "{{interface.name}}"
 {% endfor %}
 
-{{device.interfaces.all()}}
-
-{{device.interfaces['DMZ FortiLink.MANAGEMENT']}}
 
 config system interface
     edit "wan1"
