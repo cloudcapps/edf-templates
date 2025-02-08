@@ -29,7 +29,7 @@ config system interface
     set allowaccess {% for tag in interface.tags.all() %}{{ tag.name }}{% if not loop.last %} {% endif %}{% endfor %}
 {% endfor %}
 
-
+device.interfaces.filter(name='DMZ FortiLink').name
 
 
 config system interface
