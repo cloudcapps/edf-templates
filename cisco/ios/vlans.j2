@@ -17,3 +17,6 @@ vlan {{ vlan.vid }}
 {%- endif -%}
 {%- endfor -%}
 
+{% for vlan in ipam.VLAN.objects.all().get_for_device(device) -%}
+    {{ vlan.vid }}
+{% endfor %}
