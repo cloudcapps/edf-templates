@@ -5,9 +5,9 @@ interface {{ interface.name }}
  description {{ interface.description }}
 {%- endif %}
 {%- if interface.ip_addresses.all() %}
-{% for ip in interface.ip_addresses.all() %}
+{%- for ip in interface.ip_addresses.all() %}
   ip address {{ ip.address  }}
-{% endfor %}
+{%- endfor %}
 {%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
