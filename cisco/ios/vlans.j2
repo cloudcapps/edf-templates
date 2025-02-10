@@ -16,3 +16,24 @@ vlan {{ vlan.vid }}
 {%- endfor -%}
 {%- endif -%}
 {%- endfor -%}
+
+{% for vlan in vlans %}
+{% if vlan.id|int <= 4094 %}
+vlan {{ vlan.id }}
+name {{ vlan.name|replace(" ", "_")|truncate(32, True, "") }}
+exit
+!
+{% if vlan.ip_addr|length > 0 %}
+interface Vlan {{ vlan.id }}
+ip address {{ vlan.ip_addr }} {{ vlan.mask }}
+{% if vlan.desc|length > 0 %}
+description *** {{ vlan.desc }} ***
+{% endif %}
+no shutdown
+exit
+!
+{% endif %}
+{% else %}
+{{ raise("VLAN ID cannot be greater than 4094. Got " ~ vlan.id ~ " instead. Please check 02_vlans.csv file.") }}
+{% endif %}
+{% endfor %}
