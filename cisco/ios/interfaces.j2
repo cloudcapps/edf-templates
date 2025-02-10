@@ -20,6 +20,13 @@ interface {{ interface.name }}
 {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
 {%- endif %}
 {%- endif %}
+{%- else %}
+{%- if interface.description != "" %}
+ description {{ interface.description }}{%- endif %}
+{%- if interface.enabled == false %}
+ shutdown 
+{%- elif interface.enabled == true %}
+ no shutdown {%- endif %}
 {%- endif %}
 !
 {%- endfor %}
