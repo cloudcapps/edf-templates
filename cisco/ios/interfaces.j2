@@ -4,6 +4,11 @@ interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}
 {%- endif %}
+{%- if interface.ip_addresses.all() %}
+{% for ip in interface.ip_addresses.all() %}
+  ip address {{ ip.address  }}
+{% endfor %}
+{%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
