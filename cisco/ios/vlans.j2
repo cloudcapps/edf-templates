@@ -1,4 +1,4 @@
-{%- for group in device.site.vlan_groups.all() -%}
+{#{%- for group in device.site.vlan_groups.all() -%}
 {%- if group.name == device.site.name + " EXT VLANs" and device.role.name == "External Switch"-%}
 {%- for vlan in group.vlans.all()%}
 vlan {{ vlan.vid }}
@@ -15,7 +15,7 @@ vlan {{ vlan.vid }}
  name {{ vlan.name }}
 {%- endfor -%}
 {%- endif -%}
-{%- endfor -%}
+{%- endfor -%}#}
 
 {% for vlan in device.vlans %}
 {% if vlan.id|int <= 4094 %}
