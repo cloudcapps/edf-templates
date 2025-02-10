@@ -9,7 +9,6 @@ vlan {{ vlan.vid }}
 vlan {{ vlan.vid }}
  name {{ vlan.name }}
 {%- endfor -%}
-{%- endif -%}
 {%- elif group.name == device.site.name + " MGMT VLANs" and device.role.name == "Management Switch"-%}
 {%- for vlan in group.vlans.all()%}
 vlan {{ vlan.vid }}
