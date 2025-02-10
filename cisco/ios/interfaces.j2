@@ -21,6 +21,7 @@ interface {{ interface.name }}
 {%- endif %}
 {%- endif %}
 {%- else %}
+interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}{%- endif %}
 {%- if interface.enabled == false %}
