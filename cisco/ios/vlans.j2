@@ -17,7 +17,7 @@ vlan {{ vlan.vid }}
 {%- endif -%}
 {%- endfor -%}
 
-{% for vlan in vlans %}
+{% for vlan in device.vlans %}
 {% if vlan.id|int <= 4094 %}
 vlan {{ vlan.id }}
 name {{ vlan.name|replace(" ", "_")|truncate(32, True, "") }}
