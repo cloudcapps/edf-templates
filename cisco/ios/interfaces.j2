@@ -3,7 +3,8 @@
 {%- if "Vlan" not in interface.name %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
- description {{ interface.description }}{%- endif %}
+ description {{ interface.description }}
+{%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
@@ -24,7 +25,8 @@ interface {{ interface.name }}
 {%- else %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
- description {{ interface.description }}{%- endif %}
+ description {{ interface.description }}
+{%- endif %}
 {%- if interface.enabled == false %}
  shutdown 
 {%- elif interface.enabled == true %}
