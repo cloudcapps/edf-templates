@@ -15,4 +15,13 @@ vlan {{ vlan.vid }}
  name {{ vlan.name }}
 {%- endfor -%}
 {%- endif -%}
+{% if vlan.ip_addr|length > 0 %}
+interface Vlan {{ vlan.id }}
+ip address {{ vlan.ip_addr }} {{ vlan.mask }}
+{% if vlan.desc|length > 0 %}
+description *** {{ vlan.desc }} ***
+{% endif %}
+no shutdown
+exit
 {%- endfor -%}
+
