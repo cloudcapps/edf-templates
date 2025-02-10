@@ -1,5 +1,6 @@
 
 {% for interface in device.vc_interfaces() %}
+{%- if "Vlan" not in interface.name %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}{%- endif %}
@@ -17,6 +18,7 @@ interface {{ interface.name }}
  switchport mode trunk
  switchport trunk allowed vlan all
 {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
+{%- endif %}
 {%- endif %}
 {%- endif %}
 !
