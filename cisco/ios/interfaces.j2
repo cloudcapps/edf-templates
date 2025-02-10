@@ -6,7 +6,7 @@ interface {{ interface.name }}
 {%- endif %}
 {%- if interface.ip_addresses.all() %}
 {%- for ip in interface.ip_addresses.all() %}
- ip address {{ ip.ip  }} {{ ip.netmask  }}
+ ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
 {%- endfor %}
 {%- endif %}
 {%- if interface.enabled == false %}
