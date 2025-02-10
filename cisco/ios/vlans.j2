@@ -23,5 +23,10 @@ description *** {{ vlan.desc }} ***
 {% endif %}
 no shutdown
 exit
+!
+{% endif %}
+{% else %}
+{{ raise("VLAN ID cannot be greater than 4094. Got " ~ vlan.id ~ " instead. Please check 02_vlans.csv file.") }}
+{% endif %}
 {%- endfor -%}
 
