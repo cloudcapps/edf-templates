@@ -6,7 +6,7 @@ interface {{ interface.name }}
 {%- endif %}
 {%- if interface.ip_addresses.all() %}
 {%- for ip in interface.ip_addresses.all() %}
-{%- if "Vlan" not in interface.name and interface.vrf != "Mgmt-vrf" %}
+{%- if "Vlan" not in interface.name and not interface.vrf %}
  no switchport
 {%- endif %}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
