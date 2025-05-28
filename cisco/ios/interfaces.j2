@@ -1,4 +1,3 @@
-
 {% for interface in device.vc_interfaces() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
@@ -21,14 +20,16 @@ interface {{ interface.name }}
  {%- if interface.mode == "access" %}
  switchport mode access
  switchport access vlan {{ interface.untagged_vlan.vid }}
-{%- elif interface.mode == "tagged" %}
+ {%- elif interface.mode == "tagged" %}
  switchport mode trunk 
  switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() %}{{ vlan.vid }}{% if not loop.last %},{% endif %}{% endfor %}
-{%- elif "tagged-all" in interface.mode %}
+ {%- elif interface.mode and "tagged-all" in interface.mode %}
  switchport mode trunk
  switchport trunk allowed vlan all
+ {%- elif interface.mode is none %}
+ ! No switchport mode set (mode is None)
+ {%- endif %}
 {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
-{%- endif %}
 {%- endif %}
 {%- endif %}
 !
