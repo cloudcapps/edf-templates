@@ -18,26 +18,27 @@ interface {{ interface.name }}
 {%- endfor %}
 {%- endif %}
 {%- if interface.enabled == false %}
- shutdown 
+ shutdown
 {%- elif interface.enabled == true %}
  no shutdown
 {%- endif %}
 {%- if "Vlan" not in interface.name %}
- {%- if device.role.slug == "switch" %}
-   {%- if interface.mode == "access" %}
-    switchport mode access
-    switchport access vlan {{ interface.untagged_vlan.vid }}
-   {%- elif interface.mode == "tagged" %}
-    switchport mode trunk 
-    switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() %}{{ vlan.vid }}{% if not loop.last %},{% endif %}{% endfor %}
-   {%- elif interface.mode and "tagged-all" in interface.mode %}
-    switchport mode trunk
-    switchport trunk allowed vlan all
-   {%- elif interface.mode is none %}
-   {%- endif %}
-   {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
-   {%- endif %}
- {%- endif %}
+{%- if device.role.slug == "switch" %}
+{%- if interface.mode == "access" %}
+ switchport mode access
+ switchport access vlan {{ interface.untagged_vlan.vid }}
+{%- elif interface.mode == "tagged" %}
+ switchport mode trunk
+ switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() %}{{ vlan.vid }}{% if not loop.last %},{% endif %}{% endfor %}
+{%- elif interface.mode and "tagged-all" in interface.mode %}
+ switchport mode trunk
+ switchport trunk allowed vlan all
+{%- elif interface.mode is none %}
+{%- endif %}
+{%- if interface.lag != None %}
+ channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
+{%- endif %}
+{%- endif %}
 {%- endif %}
 !
 {%- endfor %}
