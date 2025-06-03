@@ -3,13 +3,13 @@ interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}
 {%- endif %}
-{%- if device.device_role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
+{%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
  no switchport
 {%- endif %}
-{%- if device.device_role.slug == "router" and '.' in interface.name %}
+{%- if device.role.slug == "router" and '.' in interface.name %}
  encapsulation dot1q {{ interface.name.split('.')[-1] }}
 {%- endif %}
-{%- if device.device_role.slug == "router" and interface.vrf %}
+{%- if device.role.slug == "router" and interface.vrf %}
  vrf forwarding {{ interface.vrf.name }}
 {%- endif %}
 {%- if interface.ip_addresses.all() %}
@@ -23,7 +23,7 @@ interface {{ interface.name }}
  no shutdown
 {%- endif %}
 {%- if "Vlan" not in interface.name %}
- {%- if device.device_role.slug == "switch" %}
+ {%- if device.role.slug == "switch" %}
    {%- if interface.mode == "access" %}
     switchport mode access
     switchport access vlan {{ interface.untagged_vlan.vid }}
