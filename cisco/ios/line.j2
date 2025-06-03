@@ -3,17 +3,11 @@ line con 0
  authorization exec CON_0_AUTH
  login authentication CON_0
  exec-timeout {{line.exec_timeout}} 0
- logging synchronous
-line vty 0 4
- access-class {{line.acl}} in vrf-also
+ logging {{ line.logging }}
+line vty 0 {{line.vty_max}}
+ access-class {{ line.access_class.in.acl }} in {{ line.access_class.in.vrf }}
  exec-timeout {{line.exec_timeout}} 0
- logging synchronous
+ logging {{ line.logging }}
  login authentication {{aaa.authentication_list}}
- transport input ssh
-line vty 5 {{line.vty_max}}
- access-class {{line.acl}} in vrf-also
- exec-timeout {{line.exec_timeout}} 0
- logging synchronous
- login authentication {{aaa.authentication_list}}
- transport input ssh
+ transport input {{ line.transport.input | join(' ') }}
 !

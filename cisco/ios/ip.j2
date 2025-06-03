@@ -1,12 +1,13 @@
 !
-{{ "no " if not ip["http server"] else "" }}ip http server
-{{ "no " if not ip["http secure-server"] else "" }}ip http secure-server
+{{ "no " if not ip.http_server else "" }}ip http server
+{{ "no " if not ip.http_secure_server else "" }}ip http secure-server
 {{ "no " if not ip.finger else "" }}ip finger
-{{ "no " if not ip["source-route"] else "" }}ip source-route
-{{ "no " if not ip["gratuitous-arps"] else "" }}ip gratuitous-arps
-{{ "no " if not ip["domain lookup"] else "" }}ip domain lookup
+{{ "no " if not ip.source_route else "" }}ip source-route
+{{ "no " if not ip.gratuitous_arps else "" }}ip gratuitous-arps
+{{ "no " if not ip.domain_lookup else "" }}ip domain lookup
 !
-{% if ip.routing %}ip routing
+{{ "no " if not ip.domain_lookup else "" }}ip routing
+!
 {% endif %}
 ip domain name {{ ip.domain_name }}
 {%- for server in ip.name_server.servers %}
