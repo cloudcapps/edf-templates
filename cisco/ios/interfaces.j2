@@ -23,11 +23,17 @@ interface {{ interface.name }}
 {%- set group = fhrp.group %}
 {%- if group.protocol == "hsrp" %}
  standby {{ group.group_id }} ip {{ group.ip_addresses.all()[0].address.ip }}
-{%- if fhrp.priority is defined and fhrp.priority %} standby {{ group.group_id }} priority {{ fhrp.priority }}{% endif %}
-{%- if fhrp.preempt is defined and fhrp.preempt %} standby {{ group.group_id }} preempt{% endif %}
+{%- if fhrp.priority is defined and fhrp.priority %}
+ standby {{ group.group_id }} priority {{ fhrp.priority }}
+{%- endif %}
+{%- if fhrp.preempt is defined and fhrp.preempt %}
+ standby {{ group.group_id }} preempt
+{%- endif %}
 {%- elif group.protocol == "vrrp" %}
  vrrp {{ group.group_id }} ip {{ group.ip_addresses.all()[0].address.ip }}
-{%- if fhrp.priority is defined and fhrp.priority %} vrrp {{ group.group_id }} priority {{ fhrp.priority }}{% endif %}
+{%- if fhrp.priority is defined and fhrp.priority %}
+ vrrp {{ group.group_id }} priority {{ fhrp.priority }}
+{%- endif %}
 {%- endif %}
 {%- endfor %}
 {%- endif %}
