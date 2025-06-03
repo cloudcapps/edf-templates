@@ -1,0 +1,17 @@
+{# Collect unique VRF names from interfaces #}
+{% set vrfs = [] %}
+{% for intf in interfaces %}
+  {% if intf.vrf is defined and intf.vrf not in vrfs %}
+    {% set _ = vrfs.append(intf.vrf) %}
+  {% endif %}
+{% endfor %}
+{# Render VRF definitions only if there are any VRFs #}
+{%- if vrfs %}
+  {%- for vrf in vrfs %}
+vrf definition {{ vrf }}
+ !
+ address-family ipv4
+ exit-address-family
+!
+  {%- endfor %}
+{%- endif %}
