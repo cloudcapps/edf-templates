@@ -1,3 +1,6 @@
+!
+ntp source {{ source_interface }}
 {%- for server in ntp.servers %}
 ntp server {{server}}
 {%- endfor %}
+!

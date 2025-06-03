@@ -1,3 +1,4 @@
+!
 {{ "no " if not ip["http server"] else "" }}ip http server
 {{ "no " if not ip["http secure-server"] else "" }}ip http secure-server
 {{ "no " if not ip.finger else "" }}ip finger
@@ -11,3 +12,4 @@ ip domain name {{ ip.domain_name }}
 {%- for server in ip.name_server.servers %}
 ip name-server {{ server }}
 {%- endfor %}
+!

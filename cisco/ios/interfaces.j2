@@ -1,3 +1,4 @@
+!
 {% for interface in device.vc_interfaces() %}
 interface {{ interface.name }}
 {%- if interface.description != "" %}
@@ -62,3 +63,4 @@ interface {{ interface.name }}
 {%- endif %}
 !
 {%- endfor %}
+!

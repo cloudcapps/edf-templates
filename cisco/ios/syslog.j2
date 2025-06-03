@@ -1,3 +1,5 @@
+!
 {%- for server in syslog.servers %}
 logging host {{server}} transport udp port {{syslog.port}}
 {%- endfor %}
+!
