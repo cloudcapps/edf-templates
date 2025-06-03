@@ -14,6 +14,8 @@ ip routing
 !
 {% include 'cisco/ios/dns.j2' %}
 !
+{% include 'cisco/ios/netflow.j2' %}
+!
 crypto key generate rsa general-keys modulus {{crypto.key_size}}
 !
 {% include 'cisco/ios/ssh.j2' %}

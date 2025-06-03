@@ -1,0 +1,21 @@
+flow record {{ netflow.record.name }}
+ description {{ netflow.record.description }}
+{%- for match in netflow.record.match %}
+ match {{ match }}
+{%- endfor %}
+{%- for collect in netflow.record.collect %}
+ collect {{ collect }}
+{%- endfor %}
+!
+flow exporter {{ netflow.exporter.name }}
+ description {{ netflow.exporter.description }}
+ destination {{ netflow.exporter.destination }}{% if interfaces and source_interface in interfaces and interfaces[source_interface].vrf %} vrf {{ interfaces[source_interface].vrf.name }}{% endif %}
+ source {{ source_interface }}
+ transport {{ netflow.exporter.transport.proto }} {{ netflow.exporter.transport.port }}
+ export-protocol {{ netflow.exporter.export_protocol }}
+!
+flow monitor {{ netflow.exporter.monitor.name }}
+ description {{ netflow.exporter.monitor.description }}
+ exporter {{ netflow.exporter.name }}
+ record {{ netflow.record.name }}
+!
