@@ -26,17 +26,13 @@ interface {{ interface.name }}
 {%- if fhrp.priority is defined and fhrp.priority %}
  standby {{ group.group_id }} priority {{ fhrp.priority }}
 {%- endif %}
-{%- if fhrp.preempt is defined and fhrp.preempt %}
- standby {{ group.group_id }} preempt
-{%- endif %}
+ standby {{ group.group_id }} preempt delay minimum 120
 {%- elif group.protocol == "vrrp" %}
  vrrp {{ group.group_id }} ip {{ group.ip_addresses.all()[0].address.ip }}
 {%- if fhrp.priority is defined and fhrp.priority %}
  vrrp {{ group.group_id }} priority {{ fhrp.priority }}
 {%- endif %}
-{%- if fhrp.preempt is defined and fhrp.preempt %}
- vrrp {{ group.group_id }} preempt
-{%- endif %}
+ vrrp {{ group.group_id }} preempt delay minimum 120
 {%- endif %}
 {%- endfor %}{% endif %}{% endif %}
 {%- endfor %}
