@@ -23,11 +23,10 @@ interface {{ interface.name }}
 {%- endfor %}
 {%- endif %}
 {# HSRP configuration if interface is a member of an FHRP group #}
-{%- if interface.fhrp_groups is defined and interface.fhrp_groups %}
+{%- if interface.fhrp_groups is defined and interface.fhrp_groups|length > 0 %}
 {%- for group in interface.fhrp_groups %}
  standby {{ group.group_id }} ip {{ group.virtual_ip }}
-{%- if group.priority is defined %} standby {{ group.group_id }} priority {{ group.priority }}{% endif %}
-{%- if group.preempt is defined and group.preempt %} standby {{ group.group_id }} preempt{% endif %}
+{%- if group.priority is defined and group.priority %} standby {{ group.group_id }} priority {{ group.priority }}{% endif %}
 {%- endfor %}
 {%- endif %}
 {# Switchport/trunk config for switches, non-Vlan interfaces #}
