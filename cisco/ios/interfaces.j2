@@ -27,7 +27,6 @@ interface {{ interface.name }}
  switchport mode trunk
  switchport trunk allowed vlan all
  {%- elif interface.mode is none %}
- ! No switchport mode set (mode is None)
  {%- endif %}
 {% if interface.lag != None %} channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
 {%- endif %}
