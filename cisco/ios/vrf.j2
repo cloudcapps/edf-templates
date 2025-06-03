@@ -5,13 +5,13 @@
     {% set _ = vrfs.append(intf.vrf) %}
   {% endif %}
 {% endfor %}
-{%- if vrfs %}
-  {%- for vrf in vrfs %}
+{% if vrfs %}
+  {% for vrf in vrfs %}
 vrf definition {{ vrf }}
  !
  address-family ipv4
  exit-address-family
 !
-  {%- endfor %}
-{%- endif %}
+  {% endfor %}
+{% endif %}
 !

@@ -8,7 +8,6 @@
 !
 {{ "no " if not ip.domain_lookup else "" }}ip routing
 !
-{% endif %}
 ip domain name {{ ip.domain_name }}
 {%- for server in ip.name_server.servers %}
 ip name-server {{ server }}
