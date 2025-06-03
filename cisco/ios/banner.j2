@@ -1,11 +1,9 @@
 {# IOS Banner Jinja2 Template with dynamic greeting logic #}
 {%- set site_name = device.site.name -%}
-{%- set region = device.site.region -%}
-{%- set region_name = region.name -%}
-{%- set region_nickname = region.custom_fields['nickname'] if region.custom_fields is defined and 'nickname' in region.custom_fields else "" -%}
-{%- set parent_region = region.parent if region.parent is defined else None -%}
-{%- set parent_region_name = parent_region.name if parent_region else "" -%}
-{%- set parent_region_nickname = parent_region.custom_fields['nickname'] if parent_region and parent_region.custom_fields is defined and 'nickname' in parent_region.custom_fields else "" -%}
+{%- set region_name = device.site.region.name -%}
+{%- set region_nickname = device.site.region.cf.nickname -%}
+{%- set parent_region_name = device.site.region.parent.name if device.site.region.parent else "" -%}
+{%- set parent_region_nickname = device.site.region.parent.cf.nickname if device.site.region.parent else "" -%}
 
 {%- if region_name == "Quebec" -%}
   {%- set location_greeting = "Bienvenue a " ~ site_name ~ "!" -%}
