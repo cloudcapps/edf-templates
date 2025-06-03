@@ -24,13 +24,14 @@ interface {{ interface.name }}
 {%- endif %}
 {# DEBUG: Show FHRP group structure for this interface #}
 {%- if interface.fhrp_groups is defined %}
-! FHRP DEBUG: {{ interface.fhrp_groups | tojson }}
+! FHRP DEBUG: {{ interface.fhrp_groups }}
 {%- endif %}
 {# HSRP configuration if interface is a member of an FHRP group #}
 {%- if interface.fhrp_groups is defined and interface.fhrp_groups|length > 0 %}
 {%- for group in interface.fhrp_groups %}
- standby {{ group.group.group_id }} ip {{ group.group.virtual_ip | default('') }}
-{%- if group.priority is defined and group.priority %} standby {{ group.group.group_id }} priority {{ group.priority }}{% endif %}
+! FHRP GROUP DEBUG: group_id={{ group.group_id | default('') }}, vip={{ group.virtual_ip | default('') }}, priority={{ group.priority | default('') }}, group_obj={{ group.group | default('') }}
+ standby {{ group.group_id | default(group.group.group_id) }} ip {{ group.virtual_ip | default(group.group.virtual_ip) }}
+{%- if group.priority is defined and group.priority %} standby {{ group.group_id | default(group.group.group_id) }} priority {{ group.priority }}{% endif %}
 {%- endfor %}
 {%- endif %}
 {# Switchport/trunk config for switches, non-Vlan interfaces #}
