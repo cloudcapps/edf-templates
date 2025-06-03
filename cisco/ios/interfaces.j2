@@ -14,8 +14,7 @@ interface {{ interface.name }}
 {%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
  no switchport
 {%- endif %}
- ip address {{ ip.address.ip  }} {{ ip.address.netmask }}{%- endfor %}
-{%- endif %}
+ ip address {{ ip.address.ip  }} {{ ip.address.netmask }}{%- endfor %}{%- endif %}
 {# HSRP/VRRP configuration if interface is a member of an FHRP group #}
 {%- if interface.fhrp_group_assignments is defined and interface.fhrp_group_assignments.all()|length > 0 %}
 {%- for fhrp in interface.fhrp_group_assignments.all() %}
