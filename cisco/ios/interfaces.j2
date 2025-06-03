@@ -8,6 +8,8 @@ interface {{ interface.name }}
 {%- endif %}
 {%- if device.role.slug == "router" and interface.vrf %}
  vrf forwarding {{ interface.vrf.name }}
+ ip flow monitor {{ netflow.monitor.name }} input
+ ip flow monitor {{ netflow.monitor.name }} output
 {%- endif %}
 {%- set has_ip = interface.ip_addresses.all()|length > 0 %}
 {%- if has_ip %}
