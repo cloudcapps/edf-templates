@@ -34,10 +34,7 @@ hostname {{device.name}}
 !
 {% include 'cisco/ios/snmp.j2' %}
 !
-banner motd ^
-{% include 'common/banner.j2' %}
-^
-%
+{% include 'cisco/ios/banner.j2' %}
 !
 {% include 'cisco/ios/line.j2' %}
 !
