@@ -1,0 +1,46 @@
+{# IOS Banner Jinja2 Template with dynamic greeting logic #}
+{%- set site_name = device.site.name -%}
+{%- set region_name = device.site.region.name -%}
+{%- set region_nickname = device.site.region.custom_fields.nickname -%}
+{%- set parent_region_name = device.site.region.parent.name if device.site.region.parent else "" -%}
+{%- set parent_region_nickname = device.site.region.parent.custom_fields.nickname if device.site.region.parent else "" -%}
+
+{%- if region_name == "Quebec" -%}
+  {%- set location_greeting = "Bienvenue a " ~ site_name ~ "!" -%}
+  {%- set state_nickname = "Situe dans la magnifique province de " ~ region_name ~ ", " ~ region_nickname ~ "." -%}
+  {%- set bonus_text = "Profitez de votre sejour et n'oubliez pas de \"write mem\" :)" -%}
+{%- elif region_name == "San Diego" -%}
+  {%- set location_greeting = "Welcome to " ~ site_name ~ ", " ~ region_nickname ~ "!" -%}
+  {%- set state_nickname = "Located in beautiful " ~ parent_region_name ~ ", " ~ parent_region_nickname ~ "." -%}
+  {%- set bonus_text = "Please enjoy your stay and don't forget to \"write mem\" :)" -%}
+{%- else -%}
+  {%- set location_greeting = "Welcome to " ~ site_name ~ "!" -%}
+  {%- set state_nickname = "Located in beautiful " ~ region_name ~ ", " ~ region_nickname ~ "." -%}
+  {%- set bonus_text = "Please enjoy your stay and don't forget to \"write mem\" :)" -%}
+{%- endif %}
+
+banner motd ^
+****************************************************************************** 
+*                                                                            *
+*                                                                            *
+*                                                                            *
+*{{ location_greeting.center(76) }}*
+*{{ state_nickname.center(76) }}*
+*{{ bonus_text.center(76) }}*
+*                                                                            *
+*  ___ ___  ___                                    _      _   _              *
+* | __|   \| __|  _ __ _____ __ _____ _ _   ______| |_  _| |_(_)___ _ _  ___ *
+* | _|| |) | _|  | '_ / _ \ V  V / -_| '_| (_-/ _ | | || |  _| / _ | ' \(_-< *
+* |___|___/|_|   | .__\___/\_/\_/\___|_|   /__\___|_|\_,_|\__|_\___|_||_/__/ *
+*                |_|                                                         *
+*                                                                            *
+*                WARNING - UNAUTHORIZED ACCESS PROHIBITED                    *
+*                                                                            *
+*        Access to this device is not authorized.  Any attempt for           *
+*        unauthorized access will be logged and appropriate legal            *
+*        action will be taken.                                               *
+*                                                                            *
+*                                                                            *
+*                                                                            *
+****************************************************************************** 
+^
