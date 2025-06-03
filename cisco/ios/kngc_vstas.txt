@@ -1,0 +1,11 @@
+!core
+ip route 10.115.142.0 255.255.254.0 172.21.200.35
+ip prefix-list PL-STATIC>EIGRP seq 20 permit 10.115.142.0/255.255.254.0
+
+!rts
+router eigrp EDF-10
+ address-family ipv4 unicast vrf DMVPN autonomous-system 10
+  network 10.115.142.0 0.0.1.255
+router eigrp EDF-20
+ address-family ipv4 unicast vrf DMVPN autonomous-system 20
+  network 10.115.142.0 0.0.1.255

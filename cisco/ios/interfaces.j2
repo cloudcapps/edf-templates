@@ -1,64 +1,44 @@
-{% for interface in device.vc_interfaces() %}
+{% for interface in device.vc_interfaces() -%}
 interface {{ interface.name }}
-{# Add interface description if present #}
-{%- if interface.description != "" %}
+{%- if interface.description != "" -%}
  description {{ interface.description }}
-{%- endif %}
-{# For routers, add encapsulation for subinterfaces (dot1q) #}
-{%- if device.role.slug == "router" and '.' in interface.name %}
+{%- endif -%}
+{%- if device.role.slug == "router" and '.' in interface.name -%}
  encapsulation dot1q {{ interface.name.split('.')[-1] }}
-{%- endif %}
-{# For routers, add VRF forwarding if interface is in a VRF #}
-{%- if device.role.slug == "router" and interface.vrf %}
+{%- endif -%}
+{%- if device.role.slug == "router" and interface.vrf -%}
  vrf forwarding {{ interface.vrf.name }}
-{%- endif %}
-{# Add all IP addresses for the interface #}
-{%- if interface.ip_addresses.all() %}
-{%- for ip in interface.ip_addresses.all() %}
-{# For switches, add 'no switchport' to routed physical interfaces #}
-{%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
+{%- endif -%}
+{%- if interface.ip_addresses.all() -%}
+{%- for ip in interface.ip_addresses.all() -%}
+{%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf -%}
  no switchport
-{%- endif %}
+{%- endif -%}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
-{%- endfor %}
-{%- endif %}
-{# DEBUG: Show FHRP group structure for this interface #}
-{%- if interface.fhrp_groups is defined %}
-! FHRP DEBUG: {{ interface.fhrp_groups }}
-{%- endif %}
-{# HSRP configuration if interface is a member of an FHRP group #}
-{%- if interface.fhrp_groups is defined and interface.fhrp_groups|length > 0 %}
-{%- for group in interface.fhrp_groups %}
-! FHRP GROUP DEBUG: group_id={{ group.group_id | default('') }}, vip={{ group.virtual_ip | default('') }}, priority={{ group.priority | default('') }}, group_obj={{ group.group | default('') }}
- standby {{ group.group_id | default(group.group.group_id) }} ip {{ group.virtual_ip | default(group.group.virtual_ip) }}
-{%- if group.priority is defined and group.priority %} standby {{ group.group_id | default(group.group.group_id) }} priority {{ group.priority }}{% endif %}
-{%- endfor %}
-{%- endif %}
-{# Switchport/trunk config for switches, non-Vlan interfaces #}
-{%- if "Vlan" not in interface.name %}
-{%- if device.role.slug == "switch" %}
-{%- if interface.mode == "access" %}
+{%- endfor -%}
+{%- endif -%}
+{%- if "Vlan" not in interface.name -%}
+{%- if device.role.slug == "switch" -%}
+{%- if interface.mode == "access" -%}
  switchport mode access
  switchport access vlan {{ interface.untagged_vlan.vid }}
-{%- elif interface.mode == "tagged" %}
+{%- elif interface.mode == "tagged" -%}
  switchport mode trunk
- switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() %}{{ vlan.vid }}{% if not loop.last %},{% endif %}{% endfor %}
-{%- elif interface.mode and "tagged-all" in interface.mode %}
+ switchport trunk allowed vlan {% for vlan in interface.tagged_vlans.all() -%}{{ vlan.vid }}{% if not loop.last -%},{% endif -%}{% endfor -%}
+{%- elif interface.mode and "tagged-all" in interface.mode -%}
  switchport mode trunk
  switchport trunk allowed vlan all
-{%- elif interface.mode is none %}
-{%- endif %}
-{# Add channel-group if LAG is present #}
-{%- if interface.lag != None %}
- channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
-{%- endif %}
-{%- endif %}
-{%- endif %}
-{# Shutdown or no shutdown depending on interface state #}
-{%- if interface.enabled == false %}
+{%- elif interface.mode is none -%}
+{%- endif -%}
+{%- if interface.lag != None -%}
+ channel-group {% for char in interface.lag.name -%}{%- if char.isdigit() -%}{{ char }}{% endif -%}{%-endfor -%} mode active
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}
+{%- if interface.enabled == false -%}
  shutdown
-{%- elif interface.enabled == true %}
+{%- elif interface.enabled == true -%}
  no shutdown
-{%- endif %}
+{%- endif -%}
 !
-{%- endfor %}
+{%- endfor -%}
