@@ -17,6 +17,20 @@ interface {{ interface.name }}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
 {%- endfor %}
 {%- endif %}
+{# HSRP/VRRP configuration if interface is a member of an FHRP group #}
+{%- if interface.fhrp_group_assignments is defined and interface.fhrp_group_assignments.all()|length > 0 %}
+{%- for fhrp in interface.fhrp_group_assignments.all() %}
+{%- set group = fhrp.group %}
+{%- if group.protocol == "hsrp" %}
+ standby {{ group.group_id }} ip {{ group.ip_addresses.all()[0].address.ip }}
+{%- if fhrp.priority is defined and fhrp.priority %} standby {{ group.group_id }} priority {{ fhrp.priority }}{% endif %}
+{%- if fhrp.preempt is defined and fhrp.preempt %} standby {{ group.group_id }} preempt{% endif %}
+{%- elif group.protocol == "vrrp" %}
+ vrrp {{ group.group_id }} ip {{ group.ip_addresses.all()[0].address.ip }}
+{%- if fhrp.priority is defined and fhrp.priority %} vrrp {{ group.group_id }} priority {{ fhrp.priority }}{% endif %}
+{%- endif %}
+{%- endfor %}
+{%- endif %}
 {%- if "Vlan" not in interface.name %}
 {%- if device.role.slug == "switch" %}
 {%- if interface.mode == "access" %}
