@@ -5,18 +5,18 @@ interface {{ interface.name }}
    description {{ interface.description }}
   {%- endif %}
 
-  {# For switches, add 'no switchport' to routed physical interfaces #}
-  {%- if device.device_role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
+  {# Use device.role.slug instead of device.device_role.slug #}
+  {%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
    no switchport
   {%- endif %}
 
   {# For routers, add encapsulation for subinterfaces (dot1q) #}
-  {%- if device.device_role.slug == "router" and '.' in interface.name %}
+  {%- if device.role.slug == "router" and '.' in interface.name %}
    encapsulation dot1q {{ interface.name.split('.')[-1] }}
   {%- endif %}
 
   {# For routers, add VRF forwarding if interface is in a VRF #}
-  {%- if device.device_role.slug == "router" and interface.vrf %}
+  {%- if device.role.slug == "router" and interface.vrf %}
    vrf forwarding {{ interface.vrf.name }}
   {%- endif %}
 
@@ -36,7 +36,7 @@ interface {{ interface.name }}
 
   {# Switchport/trunk config for switches, non-Vlan interfaces #}
   {%- if "Vlan" not in interface.name %}
-    {%- if device.device_role.slug == "switch" %}
+    {%- if device.role.slug == "switch" %}
       {%- if interface.mode == "access" %}
    switchport mode access
    switchport access vlan {{ interface.untagged_vlan.vid }}
