@@ -17,11 +17,6 @@ interface {{ interface.name }}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
 {%- endfor %}
 {%- endif %}
-{%- if interface.enabled == false %}
- shutdown
-{%- elif interface.enabled == true %}
- no shutdown
-{%- endif %}
 {%- if "Vlan" not in interface.name %}
 {%- if device.role.slug == "switch" %}
 {%- if interface.mode == "access" %}
@@ -39,6 +34,11 @@ interface {{ interface.name }}
  channel-group {% for char in interface.lag.name %}{%- if char.isdigit() %}{{ char }}{% endif %}{%-endfor %} mode active
 {%- endif %}
 {%- endif %}
+{%- endif %}
+{%- if interface.enabled == false %}
+ shutdown
+{%- elif interface.enabled == true %}
+ no shutdown
 {%- endif %}
 !
 {%- endfor %}
