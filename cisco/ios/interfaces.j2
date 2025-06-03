@@ -3,9 +3,6 @@ interface {{ interface.name }}
 {%- if interface.description != "" %}
  description {{ interface.description }}
 {%- endif %}
-{%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
- no switchport
-{%- endif %}
 {%- if device.role.slug == "router" and '.' in interface.name %}
  encapsulation dot1q {{ interface.name.split('.')[-1] }}
 {%- endif %}
@@ -14,6 +11,9 @@ interface {{ interface.name }}
 {%- endif %}
 {%- if interface.ip_addresses.all() %}
 {%- for ip in interface.ip_addresses.all() %}
+{%- if device.role.slug == "switch" and "Vlan" not in interface.name and not interface.vrf %}
+ no switchport
+{%- endif %}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
 {%- endfor %}
 {%- endif %}
