@@ -22,6 +22,10 @@ interface {{ interface.name }}
  ip address {{ ip.address.ip  }} {{ ip.address.netmask  }}
 {%- endfor %}
 {%- endif %}
+{# DEBUG: Show FHRP group structure for this interface #}
+{%- if interface.fhrp_groups is defined %}
+! FHRP DEBUG: {{ interface.fhrp_groups | tojson }}
+{%- endif %}
 {# HSRP configuration if interface is a member of an FHRP group #}
 {%- if interface.fhrp_groups is defined and interface.fhrp_groups|length > 0 %}
 {%- for group in interface.fhrp_groups %}
