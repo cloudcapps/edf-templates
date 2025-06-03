@@ -5,7 +5,6 @@
 {{ "no " if not ip.source_route else "" }}ip source-route
 {{ "no " if not ip.gratuitous_arps else "" }}ip gratuitous-arps
 {{ "no " if not ip.domain_lookup else "" }}ip domain lookup
-!
 {%- if ip.routing %}ip routing
 {%- endif %}
 ip domain name {{ ip.domain_name }}
