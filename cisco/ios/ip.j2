@@ -6,10 +6,10 @@
 {{ "no " if not ip.gratuitous_arps else "" }}ip gratuitous-arps
 {{ "no " if not ip.domain_lookup else "" }}ip domain lookup
 !
-{{ "no " if not ip.domain_lookup else "" }}ip routing
-!
+{% if ip.routing %}ip routing
+{% endif %}
 ip domain name {{ ip.domain_name }}
-{%- for server in ip.name_server.servers %}
+{% for server in ip.name_server.servers %}
 ip name-server {{ server }}
-{%- endfor %}
+{% endfor %}
 !
