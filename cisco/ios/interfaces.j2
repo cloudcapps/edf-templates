@@ -29,5 +29,5 @@ interface {{ interface.name }}
 {%- if interface.lag != None %} channel-group {% for char in interface.lag.name -%}{% if char.isdigit() %}{{ char }}{% endif %}{%- endfor %} mode active{% endif %}
 {%- endif %}
 {%- endif %}
-!
+{{ "\n!" }}
 {%- endfor %}
