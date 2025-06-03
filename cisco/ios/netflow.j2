@@ -14,8 +14,8 @@ flow exporter {{ netflow.exporter.name }}
  transport {{ netflow.exporter.transport.proto }} {{ netflow.exporter.transport.port }}
  export-protocol {{ netflow.exporter.export_protocol }}
 !
-flow monitor {{ netflow.exporter.monitor.name }}
- description {{ netflow.exporter.monitor.description }}
+flow monitor {{ netflow.monitor.name }}
+ description {{ netflow.monitor.description }}
  exporter {{ netflow.exporter.name }}
  record {{ netflow.record.name }}
 !
